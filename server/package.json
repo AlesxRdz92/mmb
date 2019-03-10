@@ -1,0 +1,26 @@
+{
+  "name": "back",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_ENV=dev nodemon .bin/www",
+    "start": "node ./bin/www",
+    "debug-serve": "NODE_ENV=dev nodemon inspect ./bin/www"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^6.2.0",
+    "express": "~4.16.0",
+    "express-promise-router": "^3.0.3",
+    "http-errors": "~1.6.2",
+    "jsonwebtoken": "^8.5.0",
+    "mongoose": "^5.4.17",
+    "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0",
+    "passport-local": "^1.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "mmb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+	  "start": "cd server && npm install && npm start", 
+	  "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
