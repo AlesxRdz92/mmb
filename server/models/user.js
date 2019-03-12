@@ -25,7 +25,7 @@ const userSchema = new Schema({
     confirmation: {
       status: {
         type: Boolean,
-        default: false
+        required: false
       },
       code: {
         type: String,
@@ -81,6 +81,7 @@ userSchema.pre("save", async function(next) {
     if(!this.local.confirmation.status) {
         shasum.update(this.local.email + Date.now());
         this.local.confirmation.code = shasum.digest('hex');
+        this.local.confirmation.status = false;
     }
     if(!this.isModified('local.password')){
       next();
