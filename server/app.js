@@ -2,8 +2,6 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 const cors = require('cors');
-//var cookieParser = require('cookie-parser');
-//var logger = require('morgan');
 var expressWinston = require('express-winston');
 var winston = require('winston');
 require('dotenv').config()
@@ -28,19 +26,6 @@ var routes = require('./routes/routes');
 
 var app = express();
 
-// view engine setup
-//app.use(express.static(path.join(__dirname, './../frontEnd/dist')));
-//app.get(/.*/, function(req, res) {
-  //  res.sendFile(__dirname + "/dist/index.html");
-//});
-
-//app.use(logger('dev'));
-app.use(express.json());
-app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-//app.use(cookieParser());
-app.use(express.static(APP_PATH + 'client/dist'));
-
 app.use(expressWinston.logger({
   transports: [
     new winston.transports.Console(),
@@ -53,6 +38,11 @@ app.use(expressWinston.logger({
     winston.format.json()
   )
 }));
+
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(APP_PATH + 'client/dist'));
 
 app.use('/api/users', usersRouter);
 app.use(routes);
