@@ -28,7 +28,6 @@ passport.use('facebookToken', new FacebookTokenStrategy({
     clientSecret: process.env.FBAPPSECRET
 }, async(accesToken, refreshToken, profile, done) => {
     try {
-        console.log(profile);
         const existUser = await User.findOne({ 'facebook.id': profile.id });
         if (existUser) 
             return done(null, existUser);

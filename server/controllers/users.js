@@ -13,6 +13,7 @@ signToken = user => {
 
 module.exports = {
     signIn: (req, res, next) => {
+        logger.error('Entro');
         const token = signToken(req.user);
         res.status(200).json({ token });
     },
