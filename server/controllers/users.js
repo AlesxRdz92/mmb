@@ -13,14 +13,17 @@ signToken = user => {
 
 module.exports = {
     signIn: (req, res, next) => {
+        logger.info(`The user ${req.user} has logged`);
         const token = signToken(req.user);
         res.status(200).json({ token });
     },
     signUp: async (req, res, next) => {
         const { email, password, name } = req.body;
         const foundUser = await User.findOne({"local.email": email});
-        if(foundUser)
+        if(foundUser) {
+            logger.error(`The email provided is already in use: ${email}`)
             return res.status(400).json('El correo electronico proporcionado ya esta asociado a otra cuenta');
+        }
         const newUser = new User({ 
             method: 'local',
             name,
@@ -30,6 +33,7 @@ module.exports = {
             }
         });
         await newUser.save();
+        logger.info(`New user registered with local: ${email}`);
         res.status(200).send();
     },
     confirm: async (req, res, next) => {
