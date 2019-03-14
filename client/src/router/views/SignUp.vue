@@ -116,6 +116,10 @@ export default {
       }
     }
   },
+  beforeCreate(){
+    if(this.$store.getters['auth/isLogged'])
+      this.$router.push('/');
+  },
   created() {
     window.fbAsyncInit = function() {
     FB.init({

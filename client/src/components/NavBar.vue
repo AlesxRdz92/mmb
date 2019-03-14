@@ -24,7 +24,9 @@
         <a class="navbar-item">Relojes</a>
         <a class="navbar-item">Autos</a>
         <a class="navbar-item">Bienes Raices</a>
+        <a class="navbar-item">Blog</a>
       </div>
+      <template v-if="!logged">
       <div class="navbar-end">
         <div class="navbar-item">
           <router-link to="/register">
@@ -35,6 +37,14 @@
           </router-link>
         </div>
       </div>
+      </template>
+      <template v-else>
+        <div class="navbar-end">
+        <div class="navbar-item">
+          <p>Bienvenido {{user.name}}</p>
+        </div>
+      </div>
+      </template>
     </div>
   </nav>
 </template>
@@ -44,6 +54,14 @@ export default {
     return {
       showNav: false
     };
+  },
+  computed: {
+    logged () {
+      return this.$store.getters['auth/isLogged'];
+    },
+    user () {
+      return this.$store.getters['auth/userInfo'];
+    }
   }
 };
 </script>

@@ -13,8 +13,8 @@ passport.use(new LocalStrategy({
         });
         if(!user)
             return done(null, false);
-        if(!user.local.confirmation.status) 
-            return done(null, false);
+        /*if(!user.local.confirmation.status) 
+            return done(null, false);*/
         const match = await user.isValidPassword(password);
         if(!match)
             return done(null, false);

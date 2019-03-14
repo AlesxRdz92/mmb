@@ -1,8 +1,12 @@
 <template>
   <footer class="footer">
     <span class="icon is-large">
-      <i class="fab fa-facebook-square"></i>
-      <i class="fab fa-instagram"></i>
+      <a href="https://www.facebook.com/MindMoneyBusiness/" target="_blank">
+        <i class="fab fa-facebook-square"></i>
+      </a>
+      <a href="https://www.instagram.com/mindmoneybusiness/" target="_blank">
+        <i class="fab fa-instagram"></i>
+      </a>
       <i class="fab fa-twitter"></i>
       <i class="fab fa-youtube"></i>
     </span>

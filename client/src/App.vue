@@ -8,6 +8,10 @@
 
 export default {
   name: 'app',
+  beforeCreate() {
+    debugger
+    console.log(this.$store.getters['auth/isLogged']);
+  }
 }
 </script>
 
