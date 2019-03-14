@@ -18,6 +18,7 @@
         <label class="label">Contraseña</label>
         <div class="control has-icons-left">
           <input
+            v-on:keyup.enter="localSignIn()"
             @focus="clean('password')"
             class="input"
             v-model="password.password"
