@@ -115,8 +115,9 @@ export default {
           axios
             .post(API.facebook, body)
             .then(response => {
-              //this.succesful = true;
-              //this.error = response.data.token;
+                response.data.token = response.headers.mmbauth;
+                this.$store.commit("auth/setJWT", response.data);
+                this.$router.push("/");
             })
             .catch(error => {
               //this.succesful = true;
@@ -165,6 +166,7 @@ export default {
       axios
         .post(API.signIn, body)
         .then(response => {
+          response.data.token = response.headers.mmbauth;
           this.$store.commit("auth/setJWT", response.data);
           this.$router.push("/");
         })

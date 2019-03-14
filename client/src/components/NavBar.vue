@@ -42,6 +42,7 @@
         <div class="navbar-end">
         <div class="navbar-item">
           <p>Bienvenido {{user.name}}</p>
+          <a @click="logout()" class="navbar-item">Salir</a>
         </div>
       </div>
       </template>
@@ -49,6 +50,8 @@
   </nav>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -61,6 +64,11 @@ export default {
     },
     user () {
       return this.$store.getters['auth/userInfo'];
+    }
+  },
+  methods: {
+    logout() {
+
     }
   }
 };

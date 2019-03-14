@@ -36,6 +36,15 @@ const mutations = {
         state.user.loggedIn = true;
         state.user.name = data.name;
         state.user.email = data.email;
+    },
+    logout(state) {
+        localStorage.removeItem('user');
+        state.user = {
+            jwt: '',
+            loggedIn: false,
+            name: '',
+            email: ''
+        }
     }
 }
 

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const JWT = require('jsonwebtoken');
 
 //Create the Schema
 const userSchema = new Schema({
@@ -69,19 +70,31 @@ const userSchema = new Schema({
       type: String,
       lowercase: true
     }
+  },
+  tokens: [
+  ],
+  createdAt: {
+    type: Date,
+    required: false
   }
 });
 
 userSchema.pre("save", async function(next) {
   try {
-    if (this.method !== "local") 
-        next();
-    //Genrate confirmation token
+    if (this.method !== "local") {
+      if(!this.createdAt) 
+        this.createdAt = new Date().toISOString();
+      next();
+    }
+    //Generate confirmation token
     const shasum = crypto.createHash('sha1');
     if(!this.local.confirmation.status) {
         shasum.update(this.local.email + Date.now());
         this.local.confirmation.code = shasum.digest('hex');
         this.local.confirmation.status = false;
+    }
+    if(!this.createdAt) {
+      this.createdAt = new Date().toISOString();
     }
     if(!this.isModified('local.password')){
       next();
@@ -108,6 +121,22 @@ userSchema.methods.generateReset = function(done) {
     user.save(done);
   });
 }
+
+userSchema.methods.generateAuthToken = function () {
+  let token = JWT.sign({
+    iss: 'MindMoneyBusiness',
+    sub: this.id,
+    iat: new Date().getTime(),
+  }, process.env.JWTSECRET).toString();
+  this.tokens.push(token);
+  return this.save().then(() => {
+    return token
+  });
+};
+
+userSchema.methods.removeToken = function () {
+  
+};
 
 userSchema.methods.isValidPassword = async function(password) {
     try {

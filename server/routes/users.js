@@ -12,5 +12,6 @@ router.post('/recover/:id', usersController.changePassword);
 router.get('/:id', usersController.getUserInfo);
 router.post('/signin', validateBody(schemas.signInSchema), passport.authenticate('local', { session: false }), usersController.signIn);
 router.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), usersController.facebookOAuth);
+router.get('/logout', usersController.logoout);
 
 module.exports = router;

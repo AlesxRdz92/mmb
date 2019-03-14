@@ -145,8 +145,9 @@ export default {
         connected: (authResponse) => {
           let body = { 'access_token': authResponse.accessToken }
           axios.post(API.facebook, body).then(response => {
-            this.succesful = true;
-            this.error = response.data.token;
+            response.data.token = response.headers.mmbauth;
+            this.$store.commit("auth/setJWT", response.data);
+            this.$router.push("/");
           }).catch(error => {
             this.succesful = true;
             this.error = error.response.data;
