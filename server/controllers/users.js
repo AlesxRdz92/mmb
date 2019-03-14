@@ -56,8 +56,5 @@ module.exports = {
         res.status(200).header('mmbauth', token).json({
             name: req.user.name,
             email: req.user.facebook.email });
-    },
-    logoout: () => {
-
     }
 };

@@ -71,8 +71,6 @@ const userSchema = new Schema({
       lowercase: true
     }
   },
-  tokens: [
-  ],
   createdAt: {
     type: Date,
     required: false
@@ -127,15 +125,9 @@ userSchema.methods.generateAuthToken = function () {
     iss: 'MindMoneyBusiness',
     sub: this.id,
     iat: new Date().getTime(),
+    exp: new Date().getTime() + 31536000000 //A year
   }, process.env.JWTSECRET).toString();
-  this.tokens.push(token);
-  return this.save().then(() => {
-    return token
-  });
-};
-
-userSchema.methods.removeToken = function () {
-  
+  return token;
 };
 
 userSchema.methods.isValidPassword = async function(password) {

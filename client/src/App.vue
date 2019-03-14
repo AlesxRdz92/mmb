@@ -7,11 +7,7 @@
 <script>
 
 export default {
-  name: 'app',
-  beforeCreate() {
-    debugger
-    console.log(this.$store.getters['auth/isLogged']);
-  }
+  name: 'app'
 }
 </script>
 
