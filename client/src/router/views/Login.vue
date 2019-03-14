@@ -17,7 +17,12 @@
       <div class="field">
         <label class="label">Contraseña</label>
         <div class="control has-icons-left">
-          <input @focus="clean('password')" class="input" v-model="password.password" type="password">
+          <input
+            @focus="clean('password')"
+            class="input"
+            v-model="password.password"
+            type="password"
+          >
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
@@ -44,29 +49,41 @@
         </a>
       </div>
     </div>
+    <div class="modal" :class="{'is-active': modal}">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <h1>Hubo un error al tratar de ingresar, las credenciales no concuerdan con ninguna cuenta registrada o no has confirmado tu email</h1>
+      </div>
+      <button class="modal-close is-large" @click="modal = false" aria-label="close"></button>
+    </div>
   </div>
 </template>
 <script>
-import axios from 'axios';
-import API  from "./../../API";
-import { error } from 'util';
+import axios from "axios";
+import API from "./../../API";
+import { error } from "util";
 const pattEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-export default {   
-    data() {
-        return {
-            email: {
-                email: '',
-                valid: true,
-                message: ''
-            },
-            password: {
-                password: '',
-                valid: true,
-                message: ''
-            }
-        }
-    }, 
+export default {
+  data() {
+    return {
+      email: {
+        email: "",
+        valid: true,
+        message: ""
+      },
+      password: {
+        password: "",
+        valid: true,
+        message: ""
+      },
+      modal: false
+    };
+  },
+  beforeCreate(){
+    if(this.$store.getters['auth/isLogged'])
+      this.$router.push('/');
+  },
   created() {
     window.fbAsyncInit = function() {
       FB.init({
@@ -91,59 +108,74 @@ export default {
     })(document, "script", "facebook-jssdk");
   },
   methods: {
-      checkLoginState() {
+    checkLoginState() {
       const dos = {
-        connected: (authResponse) => {
-          let body = { 'access_token': authResponse.accessToken }
-          axios.post(API.facebook, body).then(response => {
-            //this.succesful = true;
-            //this.error = response.data.token;
-          }).catch(error => {
-            //this.succesful = true;
-            //this.error = error.response.data;
-          });
+        connected: authResponse => {
+          let body = { access_token: authResponse.accessToken };
+          axios
+            .post(API.facebook, body)
+            .then(response => {
+                response.data.token = response.headers.mmbauth;
+                this.$store.commit("auth/setJWT", response.data);
+                this.$router.push("/");
+            })
+            .catch(error => {
+              //this.succesful = true;
+              //this.error = error.response.data;
+            });
         },
         login: () => {
-          FB.login(function(response) {
-            if(response.status === 'connected')
-              dos.connected(response.authResponse);
-          }, {scope: 'email'});
+          FB.login(
+            function(response) {
+              if (response.status === "connected")
+                dos.connected(response.authResponse);
+            },
+            { scope: "email" }
+          );
         }
-      }
+      };
       FB.getLoginStatus(function(response) {
-        dos[response.status === 'not_authorized' || response.status === 'unknown' ? 'login' : response.status](response.authResponse);
+        dos[
+          response.status === "not_authorized" || response.status === "unknown"
+            ? "login"
+            : response.status
+        ](response.authResponse);
       });
     },
     localSignIn() {
-        this.email.valid = true;
-        this.password.valid = true;
-        this.email.message = '';
-        this.password.message = '';
-        if(this.email.email === ''){
-            this.email.valid = false;
-            this.email.message = 'Este campo no puede estar vacio';
-        } else if(!pattEmail.test(this.email.email)){
-            this.email.valid = false;
-            this.email.message = 'Este correo electronico no es valido';
-        }
-        if(this.password.password === '') {
-            this.password.valid = false;
-            this.password.message = 'Este campo no puede estar vacio';
-            return
-        }
-        let body = {
-            email: this.email.email,
-            password: this.password.password
-        }
-        axios.post(API.signIn, body).then(response => {
-            console.log(response);
-
-        }).catch(error => {
-
+      this.email.valid = true;
+      this.password.valid = true;
+      this.email.message = "";
+      this.password.message = "";
+      if (this.email.email === "") {
+        this.email.valid = false;
+        this.email.message = "Este campo no puede estar vacio";
+      } else if (!pattEmail.test(this.email.email)) {
+        this.email.valid = false;
+        this.email.message = "Este correo electronico no es valido";
+      }
+      if (this.password.password === "") {
+        this.password.valid = false;
+        this.password.message = "Este campo no puede estar vacio";
+        return;
+      }
+      let body = {
+        email: this.email.email,
+        password: this.password.password
+      };
+      axios
+        .post(API.signIn, body)
+        .then(response => {
+          response.data.token = response.headers.mmbauth;
+          this.$store.commit("auth/setJWT", response.data);
+          this.$router.push("/");
+        })
+        .catch(error => {
+          this.modal = true;
         });
     },
     clean(field) {
-      this[field].message = '';
+      this[field].message = "";
     }
   }
 };
@@ -153,6 +185,7 @@ export default {
 $button-border-color: $black;
 @import "~bulma/sass/elements/_all";
 @import "~bulma/sass/layout/_all";
+@import "~bulma/sass/components/modal";
 .container {
   width: 450px;
 }

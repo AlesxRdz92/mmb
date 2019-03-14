@@ -2,8 +2,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/user');
 const FacebookTokenStrategy = require('passport-facebook-token');
+const JwtStrategy = require('passport-jwt').Strategy;
+const { ExtractJwt } = require('passport-jwt');
 
-//Loca Strategy
+//Local Strategy
 passport.use(new LocalStrategy({
     usernameField: 'email'
 }, async (email, password, done) => {
@@ -13,8 +15,8 @@ passport.use(new LocalStrategy({
         });
         if(!user)
             return done(null, false);
-        if(!user.local.confirmation.status) 
-            return done(null, false);
+        /*if(!user.local.confirmation.status) 
+            return done(null, false);*/
         const match = await user.isValidPassword(password);
         if(!match)
             return done(null, false);
@@ -46,4 +48,12 @@ passport.use('facebookToken', new FacebookTokenStrategy({
     }catch(error) {
         done(error, false, error.message);
     }    
+}));
+
+//JSON Web Tokens Strategy
+passport.use(new JwtStrategy({
+    jwtFromRequest: ExtractJwt.fromHeader('mmbauth'),
+    secretOrKey: process.env.JWTSECRET
+}, async (payload, done, a, b) => {
+    console.log(payload);
 }));

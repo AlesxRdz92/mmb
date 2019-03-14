@@ -24,7 +24,9 @@
         <a class="navbar-item">Relojes</a>
         <a class="navbar-item">Autos</a>
         <a class="navbar-item">Bienes Raices</a>
+        <a class="navbar-item">Blog</a>
       </div>
+      <template v-if="!logged">
       <div class="navbar-end">
         <div class="navbar-item">
           <router-link to="/register">
@@ -35,15 +37,40 @@
           </router-link>
         </div>
       </div>
+      </template>
+      <template v-else>
+        <div class="navbar-end">
+        <div class="navbar-item">
+          <p>Bienvenido {{user.name}}</p>
+          <a @click="logout()" class="navbar-item">Salir</a>
+        </div>
+      </div>
+      </template>
     </div>
   </nav>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       showNav: false
     };
+  },
+  computed: {
+    logged () {
+      return this.$store.getters['auth/isLogged'];
+    },
+    user () {
+      return this.$store.getters['auth/userInfo'];
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.commit("auth/logout");
+      this.$router.push('/');
+    }
   }
 };
 </script>

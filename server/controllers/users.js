@@ -1,21 +1,13 @@
-const JWT = require('jsonwebtoken');
 const User = require('../models/user');
 require('../db/mongoose');
 
-signToken = user => {
-    return token = JWT.sign({
-        iss: 'MindMoneyBusiness',
-        sub: user.id,
-        iat: new Date().getTime(),
-        exp: new Date().setDate(new Date().getDate() + 1)
-    }, process.env.JWTSECRET);
-}
-
 module.exports = {
-    signIn: (req, res, next) => {
+    signIn: async (req, res, next) => {
         logger.info(`The user ${req.user} has logged`);
-        const token = signToken(req.user);
-        res.status(200).json({ token });
+        const token = await req.user.generateAuthToken();
+        res.status(200).header('mmbauth', token).json({
+        name: req.user.name,
+        email: req.user.local.email });
     },
     signUp: async (req, res, next) => {
         const { email, password, name } = req.body;
@@ -60,7 +52,9 @@ module.exports = {
 
     },
     facebookOAuth: async(req, res, next) => {
-        const token = signToken(req.user);
-        res.status(200).json({ token });
+        const token = await req.user.generateAuthToken();
+        res.status(200).header('mmbauth', token).json({
+            name: req.user.name,
+            email: req.user.facebook.email });
     }
 };

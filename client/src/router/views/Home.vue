@@ -34,7 +34,13 @@
           <div class="tile is-parent">
             <article class="tile is-child box">
               <p class="title">¿Quienes somos?</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie consectetur efficitur. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam nec mollis est. Pellentesque aliquam sodales tempus. Phasellus porttitor arcu et metus interdum consectetur eu eu eros. Aliquam vestibulum sapien est, quis finibus tortor imperdiet at. Suspendisse eros libero, ornare sed feugiat eget, aliquam a ex. Cras pulvinar neque cursus, vestibulum massa ut, accumsan risus. Aliquam id cursus erat. In facilisis tempor libero at tempor. Nunc sem turpis, varius quis rhoncus nec, molestie at lectus. Pellentesque vel gravida justo.</p>
+              <p>Somos un grupo de empresarios, comerciantes e intermediarios en negociaciones, productos, y servicios. Trabajando siempre de la mano de gente conocida por nosotros, gente calificada, honesta, trabajadora, y distinguidos comerciantes y empresarios.</p>
+              <br>
+              <p>Hacemos que la gente se identifique con nuestra filosofía de lujo, empresarial, emprendimiento, y éxito. Para lograr de esta manera que nuestro logotipo sea un EMBLEMA para la gente de Aguascalientes y todo México.</p>
+              <br>
+              <p>La mente es el con qué, el dinero es el cómo, y los negocios son el para qué.</p>
+              <br>
+              <p>Mind Money Business, emblema de éxito hidrocálido.</p>
               <!-- Put any content you want -->
             </article>
           </div>
