@@ -74,14 +74,16 @@ const userSchema = new Schema({
   createdAt: {
     type: Date,
     required: false
+  },
+  profileImage: {
+    type: String,
+    required: false
   }
 });
 
 userSchema.pre("save", async function(next) {
   try {
     if (this.method !== "local") {
-      if(!this.createdAt) 
-        this.createdAt = new Date().toISOString();
       next();
     }
     //Generate confirmation token
@@ -90,9 +92,6 @@ userSchema.pre("save", async function(next) {
         shasum.update(this.local.email + Date.now());
         this.local.confirmation.code = shasum.digest('hex');
         this.local.confirmation.status = false;
-    }
-    if(!this.createdAt) {
-      this.createdAt = new Date().toISOString();
     }
     if(!this.isModified('local.password')){
       next();

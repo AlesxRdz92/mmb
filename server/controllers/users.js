@@ -7,14 +7,19 @@ module.exports = {
         const token = await req.user.generateAuthToken();
         res.status(200).header('mmbauth', token).json({
         name: req.user.name,
-        email: req.user.local.email });
+        email: req.user.local.email,
+        profileImage: req.user.profileImage });
     },
     signUp: async (req, res, next) => {
+        let photo;
         const { email, password, name } = req.body;
         const foundUser = await User.findOne({"local.email": email});
         if(foundUser) {
             logger.error(`The email provided is already in use: ${email}`)
             return res.status(400).json('El correo electronico proporcionado ya esta asociado a otra cuenta');
+        }
+        if (/\s/.test(name)) {
+          photo = name.split(' ');
         }
         const newUser = new User({ 
             method: 'local',
@@ -22,7 +27,9 @@ module.exports = {
             local: {
                 email,
                 password
-            }
+            },
+            createdAt: new Date().toISOString(),
+            profileImage: photo ? `https://ui-avatars.com/api/?name=${photo[0]}+${photo[1]}` : `https://ui-avatars.com/api/?name=${name}`
         });
         await newUser.save();
         logger.info(`New user registered with local: ${email}`);
@@ -55,6 +62,7 @@ module.exports = {
         const token = await req.user.generateAuthToken();
         res.status(200).header('mmbauth', token).json({
             name: req.user.name,
-            email: req.user.facebook.email });
+            email: req.user.facebook.email,
+            profileImage: req.user.profileImage });
     }
 };

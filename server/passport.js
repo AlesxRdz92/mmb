@@ -41,7 +41,9 @@ passport.use('facebookToken', new FacebookTokenStrategy({
             facebook: {
                 id: profile.id,
                 email: profile._json.email
-            }
+            },
+            profileImage: profile.photos[0].value,
+            createdAt: new Date().toISOString()
         });
         await newUser.save();
         done(null, newUser);

@@ -2,7 +2,9 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item">
-        <img src="./../assets/Logo.png" width="30" height="30">
+        <figure class="image is-32x32">
+          <img class="is-rounded" src="./../assets/Logo.png">
+        </figure>
       </a>
       <a
         role="button"
@@ -46,11 +48,11 @@
       <template v-else>
         <div class="navbar-end">
           <div class="navbar-item">
-            <p>Bienvenido {{user.name}}</p>
-          </div>
-          <div class="navbar-item">
+            <figure class="image is-32x32">
+                <img class="is-rounded" :src="user.profileImage">
+              </figure>
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">Cuenta</a>
+              <a class="navbar-link"><p>{{user.name}}</p></a>
               <div class="navbar-dropdown">
                 <a class="navbar-item">Perfil</a>
                 <a @click="logout()" class="navbar-item">Salir</a>
@@ -96,8 +98,8 @@ export default {
 @import "@/design/index.scss";
 $navbar-background-color: $panels-color;
 $navbar-item-color: $gray;
-$navbar-item-hover-color: $green;
-$navbar-item-hover-background-color: $black;
+$navbar-item-hover-color: $white;
+$navbar-item-hover-background-color: $panels-color;
 $navbar-dropdown-arrow: $yellow;
 @import "~bulma/sass/components/navbar";
 p {
