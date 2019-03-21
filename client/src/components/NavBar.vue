@@ -24,6 +24,7 @@
       <div class="navbar-start">
         <a class="navbar-item">Ropa</a>
         <a class="navbar-item">Relojes</a>
+        <a class="navbar-item">Smartphones</a>
         <a class="navbar-item">Autos</a>
         <a class="navbar-item">Bienes Raices</a>
         <a class="navbar-item">Blog</a>
@@ -101,6 +102,10 @@ $navbar-item-color: $gray;
 $navbar-item-hover-color: $white;
 $navbar-item-hover-background-color: $panels-color;
 $navbar-dropdown-arrow: $yellow;
+$navbar-dropdown-background-color: $panels-color;
+$navbar-dropdown-border-top: 2px solid $black;
+$navbar-dropdown-item-hover-background-color: $panels-color;
+$navbar-dropdown-item-hover-color: $white;
 @import "~bulma/sass/components/navbar";
 p {
   color: $yellow;

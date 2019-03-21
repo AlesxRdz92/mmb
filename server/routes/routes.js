@@ -9,6 +9,7 @@ function routeHandler(req, res) {
 router.get('/', routeHandler);
 router.get('/register', routeHandler);
 router.get('/signin', routeHandler);
+router.get('/items', routeHandler);
 /*router.get('/export', secure.auth, routeHandler);
 router.get('/login', routeHandler);
 router.get('/success/:id', routeHandler);

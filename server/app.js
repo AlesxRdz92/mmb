@@ -23,6 +23,7 @@ global.APP_PATH = process.cwd().replace('server', '');
 
 var usersRouter = require('./routes/users');
 var routes = require('./routes/routes');
+var itemsRouter = require('./routes/items')
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use(express.static(APP_PATH + 'client/dist'));
 
 app.use('/api/users', usersRouter);
 app.use(routes);
+app.use('/api/items', itemsRouter);
 
 app.use(expressWinston.errorLogger({
   transports: [
