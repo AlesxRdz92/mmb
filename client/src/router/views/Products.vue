@@ -1,103 +1,39 @@
 <template>
   <div>
     <bar></bar>
-      <p style="margin: 0 auto; text-align: center;" class="title is-1">Coches</p>
-      <div class="tile is-ancestor">
-        <div v-for="index in elements" :key="index" class="tile is-parent">
-          <article class="tile is-child box">
+    <p style="margin: 0 auto; text-align: center;" class="title is-1">{{tittle}}</p>
+    <div v-for="(item, index) in items" :key="index" class="tile is-ancestor">
+      <div v-for="(i, o) in item" :key="o" class="tile is-parent">
+        <article class="tile is-child box">
           <div class="card">
             <div class="card-image">
               <figure class="image is-4by3">
-                <img
-                  src="./../../assets/maxresdefault.jpeg"
-                  alt="Placeholder image"
-                >
+                <img :src="require(`./../../assets${i.mainPhoto}.jpeg`)" alt="Placeholder image">
               </figure>
             </div>
             <div class="card-content">
               <div class="media">
-                <div class="media-left">
-                </div>
+                <div class="media-left"></div>
                 <div class="media-content">
-                  <p class="title is-4">BMW M2</p>
+                  <p class="title is-4">{{i.name}}</p>
                 </div>
               </div>
-
               <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris.
+                {{i.shortDescription}}
               </div>
             </div>
           </div>
-          </article>
-        </div>
+        </article>
       </div>
-      <div class="tile is-ancestor">
-        <div v-for="index in 2" :key="index" class="tile is-parent">
-          <article class="tile is-child box">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img
-                  src="./../../assets/maxresdefault.jpeg"
-                  alt="Placeholder image"
-                >
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                </div>
-                <div class="media-content">
-                  <p class="title is-4">BMW M2</p>
-                </div>
-              </div>
-
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris.
-              </div>
-            </div>
-          </div>
-          </article>
-        </div>
-      </div>
-      <div class="tile is-ancestor">
-        <div v-for="index in 1" :key="index" class="tile is-parent">
-          <article class="tile is-child box">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-4by3">
-                <img
-                  src="./../../assets/maxresdefault.jpeg"
-                  alt="Placeholder image"
-                >
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                </div>
-                <div class="media-content">
-                  <p class="title is-4">BMW M2</p>
-                </div>
-              </div>
-
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris.
-              </div>
-            </div>
-          </div>
-          </article>
-        </div>
-      </div>
+    </div>
     <foot></foot>
   </div>
 </template>
 <script>
 import NavBar from "./../../components/NavBar";
 import Foot from "./../../components/Footer";
+import axios from "axios";
+import API from "./../../API";
 
 export default {
   name: "Products",
@@ -107,29 +43,26 @@ export default {
   },
   data() {
     return {
-      elements: [
-        {
-          tittle: "M2",
-          content:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit Phasellus nec iaculis mauris.$470,000",
-          flip: false
-        },
-        {
-          tittle: "M2",
-          content:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit Phasellus nec iaculis mauris.$470,000",
-          flip: false
-        },
-        {
-          tittle: "M2",
-          content:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit Phasellus nec iaculis mauris.$470,000",
-          flip: false
-        }
-      ]
+      tittle: '',
+      tittles: {
+        car: 'Autos'
+      },
+      items: []
     };
   },
-  methods: {}
+  methods: {},
+  created() {
+    this.tittle = this.tittles[this.$route.params.id];
+    axios.get(API.getItems + this.$route.params.id).then(res => {
+      if (res.data.length > 3) {
+        for (let i = 0; i < res.data.length; i += 3) {
+          this.items.push(res.data.slice(i, i + 3));
+        }
+      } else {
+        this.items = res.data;
+      }
+    });
+  }
 };
 </script>
 <style lang="scss">
@@ -144,6 +77,6 @@ $card-color: $white;
 @import "~bulma/sass/layout/_all";
 @import "~bulma/sass/components/_all";
 .is-child {
- cursor: pointer; 
+  cursor: pointer;
 }
 </style>

@@ -5,7 +5,7 @@
         <div class="tile is-vertical is-8">
           <div class="tile is-parent">
             <article class="tile is-child box">
-              <img src="./../../assets/maxresdefault.jpeg" alt id="vieja">
+              <img src="./../../assets/Home.jpg" alt id="Home">
             </article>
           </div>
           <div class="tile">

@@ -29,7 +29,7 @@ export default [
         }
     },
     {
-        path: '/items',
+        path: '/items/:id',
         name: 'Product',
         component: product,
         meta: {

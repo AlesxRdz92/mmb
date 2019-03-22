@@ -25,7 +25,9 @@
         <a class="navbar-item">Ropa</a>
         <a class="navbar-item">Relojes</a>
         <a class="navbar-item">Smartphones</a>
-        <a class="navbar-item">Autos</a>
+        <router-link to="/items/car" class="navbar-item">
+          Autos
+        </router-link>
         <a class="navbar-item">Bienes Raices</a>
         <a class="navbar-item">Blog</a>
       </div>
@@ -71,8 +73,6 @@
   </nav>
 </template>
 <script>
-import axios from "axios";
-
 export default {
   data() {
     return {
