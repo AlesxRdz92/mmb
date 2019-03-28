@@ -31,6 +31,15 @@ const itemSchema = new Schema({
     mainPhoto: {
         type: Array,
         required: true
+    },
+    justDate: {
+        type: Boolean,
+        required: true
+    },
+    currency: {
+        type: String,
+        enum: ["USD", "MXN", "EUR"],
+        required: true
     }
 });
 

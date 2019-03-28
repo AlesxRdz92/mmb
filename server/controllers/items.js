@@ -10,7 +10,7 @@ module.exports = {
         });
     },
     getOne: (req, res, next) => {
-        Item.findById(req.params.id, '_id name description price photos').then(item => {
+        Item.findById(req.params.id, '_id name description price photos justDate category currency').then(item => {
             res.status(200).send(item);
         }).catch(e => {
             res.status(404).send();

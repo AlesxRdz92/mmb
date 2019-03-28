@@ -12,18 +12,19 @@
       </div>
       <div class="tile is-vertical is-parent">
         <div class="tile is-child box">
-          <p class="title">${{item.price}} mxn</p>
+          <p class="title">{{price}}</p>
           <ul v-for="(des, x) in item.description" :key="x">
             <li>
               <span class="icon">
-                <i class="fas fa-car"></i>
+                <i :class="activeIcon"></i>
               </span>{{des}}
             </li>
             <br>
           </ul>
           <br>
           <br>
-          <a class="button is-fullwidth">Agendar cita</a>
+          <a v-if="item.justDate" class="button is-fullwidth">Agendar cita</a>
+          <a v-else class="button is-fullwidth">Agregar a carrito</a>
         </div>
       </div>
     </div>
@@ -44,13 +45,21 @@ export default {
   },
   data() {
     return {
+      icons: {
+        car: 'fas fa-car',
+        watch: 'fas fa-clock',
+        smartphone: 'fas fa-mobile'
+      },
       active: 0,
       item: {
         _id: "",
         name: "",
         description: "",
-        price: "",
-        photos: []
+        price: 0,
+        photos: [],
+        justDate: false,
+        category: '',
+        currency: ''
       }
     };
   },
@@ -62,6 +71,14 @@ export default {
   methods: {
     change() {
       this.active = this.active < this.item.photos.length - 1 ? this.active + 1 : 0;
+    }
+  },
+  computed: {
+    activeIcon() {
+      return this.icons[this.item.category];
+    },
+    price() {
+      return new Intl.NumberFormat('es-419', { style: 'currency', currency: this.item.currency || 'USD'}).format(this.item.price)
     }
   }
 };

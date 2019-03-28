@@ -47,7 +47,8 @@ export default {
     return {
       tittle: '',
       tittles: {
-        car: 'Autos'
+        car: 'Autos',
+        smartphone: 'Smarthphones'
       },
       items: []
     };
