@@ -215,4 +215,7 @@ figure {
   color: $yellow;
   text-align: right;
 }
+.icon {
+  color: $white;
+}
 </style>

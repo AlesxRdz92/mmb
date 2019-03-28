@@ -5,6 +5,7 @@
     <div v-for="(item, index) in items" :key="index" class="tile is-ancestor">
       <div v-for="(i, o) in item" :key="o" class="tile is-parent">
         <article class="tile is-child box">
+          <router-link :to="`/item/${i._id}`">
           <div class="card">
             <div class="card-image">
               <figure class="image is-4by3">
@@ -23,6 +24,7 @@
               </div>
             </div>
           </div>
+          </router-link>
         </article>
       </div>
     </div>
@@ -76,7 +78,4 @@ $card-color: $white;
 @import "~bulma/sass/elements/_all";
 @import "~bulma/sass/layout/_all";
 @import "~bulma/sass/components/_all";
-.is-child {
-  cursor: pointer;
-}
 </style>

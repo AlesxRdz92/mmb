@@ -1,7 +1,8 @@
 import home from './views/Home';
 import register from './views/SignUp';
 import login from './views/Login';
-import product from './views/Products'
+import product from './views/Products';
+import item from './views/Item';
 
 export default [
     {
@@ -32,6 +33,14 @@ export default [
         path: '/items/:id',
         name: 'Product',
         component: product,
+        meta: {
+            auth: false
+        }
+    },
+    {
+        path: '/item/:id',
+        name: 'Item',
+        component: item,
         meta: {
             auth: false
         }

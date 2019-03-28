@@ -6,8 +6,14 @@ module.exports = {
         Item.find({category: req.params.id}, '_id name stock shortDescription mainPhoto').then(item =>{
             res.status(200).send(item);
         }).catch(e => {
-            console.log(e);
             res.status(404).send();
         });
+    },
+    getOne: (req, res, next) => {
+        Item.findById(req.params.id, '_id name description price photos').then(item => {
+            res.status(200).send(item);
+        }).catch(e => {
+            res.status(404).send();
+        })
     }
 };

@@ -2,5 +2,6 @@ export default {
     signUp: '/api/users/signup/',
     facebook: '/api/users/oauth/facebook/',
     signIn: '/api/users/signin',
-    getItems: '/api/items/'
+    getItems: '/api/items/',
+    getOne: '/api/items/one/'
 };
