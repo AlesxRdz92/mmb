@@ -1,5 +1,6 @@
 const User = require('../models/user');
 require('../db/mongoose');
+const sendEmail = require('../helpers/mail');
 
 module.exports = {
     signIn: async (req, res, next) => {
@@ -21,7 +22,7 @@ module.exports = {
         if (/\s/.test(name)) {
           photo = name.split(' ');
         }
-        const newUser = new User({ 
+        let newUser = new User({ 
             method: 'local',
             name,
             local: {
@@ -31,7 +32,8 @@ module.exports = {
             createdAt: new Date().toISOString(),
             profileImage: photo ? `https://ui-avatars.com/api/?name=${photo[0]}+${photo[1]}` : `https://ui-avatars.com/api/?name=${name}`
         });
-        await newUser.save();
+        newUser = await newUser.save();
+        sendEmail(newUser.local.email, 'Gracias por registrarte en Mind Money Business', 'newUser', newUser.local.confirmation.code);
         logger.info(`New user registered with local: ${email}`);
         res.status(200).send();
     },
