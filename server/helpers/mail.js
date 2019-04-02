@@ -1,8 +1,17 @@
 const nodeMailer = require('nodemailer');
+const fs = require('fs');
+const Mustache = require('mustache');
 
-const sendEmail = (to, subject, text, token) => {
+const sendEmail = (to, subject) => {
   const templates = {
-    newUser: `Bievenido a Mind Money Business, por favor da click en el siguiente link' /reset/${token}`
+    newUser: {
+      subject: 'Bienvenido a Mind Money Business',
+      template: '/emailConfirmationTemplate.html',
+      mustacheTemplate: {
+        name: to.name,
+        link: 'https://www.facebook.com/'
+      }
+    }
   };
 
   let transporter = nodeMailer.createTransport({
@@ -17,16 +26,22 @@ const sendEmail = (to, subject, text, token) => {
 
   let mailOptions = {
     from: process.env.USERMAIL,
-    to,
-    subject,
-    text: templates[text]
+    to: to.email,
+    subject: templates[subject].subject
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return logger.info(error);
+  fs.readFile(__dirname + templates[subject].template, 'utf8',(err, htmlTemplate) => {
+    if (err) {
+      console.log(err)
+    } else {
+      var rendered = Mustache.render(htmlTemplate, templates[subject].mustacheTemplate);
+      mailOptions.html = rendered;
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err){
+          console.log(err)
+        }
+      });
     }
-    return logger.info(info.messageId);
   });
 };
 

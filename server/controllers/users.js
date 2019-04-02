@@ -33,7 +33,7 @@ module.exports = {
             profileImage: photo ? `https://ui-avatars.com/api/?name=${photo[0]}+${photo[1]}` : `https://ui-avatars.com/api/?name=${name}`
         });
         newUser = await newUser.save();
-        sendEmail(newUser.local.email, 'Gracias por registrarte en Mind Money Business', 'newUser', newUser.local.confirmation.code);
+        sendEmail({name: newUser.name, token: newUser.local.confirmation.code, email: newUser.local.email}, 'newUser');
         logger.info(`New user registered with local: ${email}`);
         res.status(200).send();
     },
