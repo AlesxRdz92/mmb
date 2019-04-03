@@ -4,5 +4,6 @@ export default {
     signIn: '/api/users/signin',
     getItems: '/api/items/',
     getOne: '/api/items/one/',
-    confirm: '/api/users/confirm/'
+    confirm: '/api/users/confirm/',
+    forgot: '/api/users/recover'
 };

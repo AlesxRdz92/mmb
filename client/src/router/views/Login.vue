@@ -36,7 +36,9 @@
             <strong>Entrar</strong>
           </span>
         </a>
-        <p class="help link">¿Has olvidado tu contraseña?</p>
+        <router-link to="/forgot">
+          <p class="help link">¿Has olvidado tu contraseña?</p>
+        </router-link>
         <router-link to="/register">
           <p class="help link">¿No tienes una cuenta?</p>
         </router-link>
@@ -62,7 +64,6 @@
 <script>
 import axios from "axios";
 import API from "./../../API";
-import { error } from "util";
 const pattEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default {

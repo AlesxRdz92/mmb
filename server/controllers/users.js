@@ -50,8 +50,10 @@ module.exports = {
     },
     forgotPassword: async (req, res, next) => {
         const user = await User.findOne({'local.email': req.body.email});
-        if(user)
+        if(user) {
             await user.generateReset();
+            sendEmail({name: user.name, token: user.local.resetPassword.code, email: user.local.email}, 'forgotPassword');
+        }
         res.status(200).send();
     },
     changePassword: () => {

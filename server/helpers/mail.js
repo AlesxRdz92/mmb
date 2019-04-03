@@ -9,7 +9,23 @@ const sendEmail = (to, subject) => {
       template: '/emailConfirmationTemplate.html',
       mustacheTemplate: {
         name: to.name,
-        link: 'https://www.facebook.com/'
+        link: `http://localhost:8080/confirm/${to.token}`,
+        body: 'Gracias por querer ser parte de Mind Money Business, estas a un solo paso de tener tu cuenta, por favor confirma dando click al siguiente boton.',
+        but: 'Confirmar Email',
+        title: 'Confirma tu Email',
+        down: 'Una vez que confirmes tu correo eletronico, podras realizar compras y agendar citas en Mind Money Business.'
+      }
+    },
+    forgotPassword: {
+      subject: '¿Olvidaste tu contraseña?',
+      template: '/emailConfirmationTemplate.html',
+      mustacheTemplate: {
+        name: to.name,
+        link: `http://localhost:8080/forgot/${to.token}`,
+        body: 'Gracias por ponerte en contacto con nosotros para recuperar tu contraseña de Mind Money Business, el enlace solo funcionara durante la siguiente hora',
+        but: 'Recuperar contraseña',
+        title: 'Recupera tu cuenta',
+        down: 'Una vez que generes tu contraseña podras ingresar nuevamente a la plataforma.'
       }
     }
   };

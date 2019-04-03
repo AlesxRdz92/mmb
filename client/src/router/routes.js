@@ -4,6 +4,7 @@ import login from './views/Login';
 import product from './views/Products';
 import item from './views/Item';
 import confirm from './views/Confirm';
+import forgot from './views/ForgotPassword';
 
 export default [
     {
@@ -50,6 +51,14 @@ export default [
         path: '/confirm/:id',
         name: 'Confirm',
         component: confirm,
+        meta: {
+            auth: false
+        }
+    },
+    {
+        path: '/forgot',
+        name: 'Forgot',
+        component: forgot,
         meta: {
             auth: false
         }
