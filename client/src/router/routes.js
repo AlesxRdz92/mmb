@@ -3,6 +3,7 @@ import register from './views/SignUp';
 import login from './views/Login';
 import product from './views/Products';
 import item from './views/Item';
+import confirm from './views/Confirm';
 
 export default [
     {
@@ -41,6 +42,14 @@ export default [
         path: '/item/:id',
         name: 'Item',
         component: item,
+        meta: {
+            auth: false
+        }
+    },
+    {
+        path: '/confirm/:id',
+        name: 'Confirm',
+        component: confirm,
         meta: {
             auth: false
         }

@@ -68,7 +68,7 @@
       <figure class="image is-128x128">
         <img class="is-rounded" src="./../../assets/Logo.png">
       </figure>
-      <h1>{{error || 'Gracias por querer ser parte de nosotros, en breve recibiras un correo de nuestra parte para concluir con el proceso de registro'}}</h1>
+      <h1>{{error || 'Gracias por querer ser parte de nosotros, en breve recibiras un correo electronico de nuestra parte para concluir con el proceso de registro, por favor revisa tambien la bandeja de correo no deseado o spam'}}</h1>
       <div class="field">
         <a id="own" @click="back()" class="button is-fullwidth">
           <span>
@@ -212,6 +212,9 @@ export default {
       this.newUser[field].message = '';
     },
     back() {
+      if(!this.error) {
+        this.$router.push({ path: "/" });
+      }
       this.succesful = false;
       this.error = '';
       this.newUser = {
