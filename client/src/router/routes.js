@@ -5,6 +5,7 @@ import product from './views/Products';
 import item from './views/Item';
 import confirm from './views/Confirm';
 import forgot from './views/ForgotPassword';
+import reset from './views/ResetPassword'
 
 export default [
     {
@@ -59,6 +60,14 @@ export default [
         path: '/forgot',
         name: 'Forgot',
         component: forgot,
+        meta: {
+            auth: false
+        }
+    },
+    {
+        path: '/forgot/:token',
+        name: 'Reset',
+        component: reset,
         meta: {
             auth: false
         }

@@ -8,7 +8,7 @@ const { validateBody, schemas } = require('../midleware/routeHelper');
 router.post('/signup', validateBody(schemas.signUpSchema), usersController.signUp);
 router.get('/confirm/:id', usersController.confirm);
 router.post('/recover', usersController.forgotPassword);
-router.post('/recover/:id', usersController.changePassword);
+router.post('/recover/:token', usersController.changePassword);
 router.get('/:id', usersController.getUserInfo);
 router.post('/signin', validateBody(schemas.signInSchema), passport.authenticate('local', { session: false }), usersController.signIn);
 router.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), usersController.facebookOAuth);

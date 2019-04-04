@@ -5,9 +5,7 @@
         <img class="is-rounded" src="./../../assets/Logo.png">
       </figure>
       <h1>{{title}}</h1>
-      <label
-        class="label"
-      >{{label}}</label>
+      <label class="label">{{label}}</label>
       <div v-if="show" class="control has-icons-left">
         <input v-on:keyup.enter="send()" v-model="email" class="input" type="email">
         <span class="icon is-small is-left">
@@ -39,28 +37,33 @@ import axios from "axios";
 import API from "./../../API";
 
 export default {
-    data() {
-        return {
-            email: '',
-            show: true,
-            title: 'Esta bien! A todo mundo le puede pasar',
-            label: 'Solamente dinos la direccion de correo electronico que usaste para crear tu cuenta y nosotros nos encargaremos de ayudarte a recuperarla'
-        }
+  data() {
+    return {
+      email: "",
+      show: true,
+      title: "Esta bien! A todo mundo le puede pasar",
+      label:
+        "Solamente dinos la direccion de correo electronico que usaste para crear tu cuenta y nosotros nos encargaremos de ayudarte a recuperarla"
+    };
+  },
+  beforeCreate() {
+    if (this.$store.getters["auth/isLogged"]) this.$router.push("/");
+  },
+  methods: {
+    send() {
+      if (this.email !== "") {
+        axios.post(API.forgot, { email: this.email }).then(responsse => {
+          this.title = "Siguiente paso, por favor checa tu correo electronico";
+          this.label =
+            "Si tu correo esta asignado a una cuenta de Mind Money Business, te enviaremos instrucciones para generar una nueva contraseña. Por favor revisa tambien tu bandeja de correo no deseado o spam";
+          this.show = false;
+        });
+      }
     },
-    methods: {
-        send() {
-            if(this.email !== '') {
-            axios.post(API.forgot, {email: this.email}).then(responsse => {
-                this.title = 'Siguiente paso, por favor checa tu correo electronico';
-                this.label = 'Si tu correo esta asignado a una cuenta de Mind Money Business, te enviaremos instrucciones para generar una nueva contraseña. Por favor revisa tambien tu bandeja de correo no deseado o spam'
-                this.show = false;
-            });
-        }
-        },
-        home() {
-            this.$router.push({path: '/'});
-        }
+    home() {
+      this.$router.push({ path: "/" });
     }
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -56,8 +56,18 @@ module.exports = {
         }
         res.status(200).send();
     },
-    changePassword: () => {
-
+    changePassword: async (req, res, next) => {
+        const query = {
+            'local.resetPassword.code': req.params.token,
+            'local.resetPassword.expires': { $gt: Date.now() }
+        };
+        const user = await User.findOne(query);
+        if(!user) 
+            return res.status(404).json('The token has experied or is not valid');
+        user.local.password = req.body.password;
+        user.local.resetPassword = undefined;
+        user.save();
+        res.status(200).send();
     },
     getUserInfo: () => {
 

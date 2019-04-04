@@ -35,6 +35,16 @@
         </div>
       <p v-if="newUser.password.valid === false" class="help is-danger">{{newUser.password.message}}</p>
       </div>
+       <div class="field">
+        <label class="label">Confirmar Contraseña</label>
+        <div class="control has-icons-left">
+          <input class="input" v-model="newUser.confirmPassword.confirmPassword" @focus="clean('confirmPassword')" @blur="validate('confirmPassword')" type="password">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </div>
+      <p v-if="newUser.confirmPassword.valid === false" class="help is-danger">{{newUser.confirmPassword.message}}</p>
+      </div>
       <div class="field">
         <a id="own" @click="localSignUp()" class="button is-fullwidth">
           <span>
@@ -44,14 +54,6 @@
           <router-link to="/signin">
             <p class="help link">¿Ya tienes una cuenta?</p>
           </router-link>
-      </div>
-      <div class="field">
-        <a @click="localSignUp()" id="twitter" class="button is-fullwidth">
-          <span class="icon">
-            <i class="fab fa-twitter"></i>
-          </span>
-          <span>Inicia sesión con Twitter</span>
-        </a>
       </div>
       <div class="field">
         <a @click="checkLoginState()" id="fb" class="button is-fullwidth">
@@ -87,10 +89,10 @@ import API  from "./../../API";
 const messages = {
   generic: 'Este campo no puede estar vacio',
   email: 'Este correo electronico no es valido',
-  password: 'La contraseña ingresada no es valida'
+  password: 'La contraseña tiene que contener al menos 8 caracteres',
+  confirmPassword: 'Las contraseñas tienen que coincidir'
 }
 const pattEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const pattPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
 export default {
   data() {
@@ -110,6 +112,11 @@ export default {
         },
         password: {
           password: '',
+          valid: true,
+          message: ''
+        },
+        confirmPassword: {
+          confirmPassword: '',
           valid: true,
           message: ''
         }
@@ -199,9 +206,15 @@ export default {
             return
           }
         case 'password':
-          if(!pattPassword.test(this.newUser.password.password)) {
+          if(this.newUser.password.password.length < 8) {
             this.newUser.password.valid = false;
             this.newUser.password.message = messages.password;
+            return
+          }
+        case 'confirmPassword':
+          if(this.newUser.confirmPassword.confirmPassword !== this.newUser.password.password) {
+            this.newUser.confirmPassword.valid = false;
+            this.newUser.confirmPassword.message = messages.confirmPassword;
             return
           }
       }
