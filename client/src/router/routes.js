@@ -5,7 +5,8 @@ import product from './views/Products';
 import item from './views/Item';
 import confirm from './views/Confirm';
 import forgot from './views/ForgotPassword';
-import reset from './views/ResetPassword'
+import reset from './views/ResetPassword';
+import profile from './views/Profile';
 
 export default [
     {
@@ -70,6 +71,14 @@ export default [
         component: reset,
         meta: {
             auth: false
+        }
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component: profile,
+        meta: {
+            auth: true
         }
     }
 ]

@@ -78,6 +78,18 @@ const userSchema = new Schema({
   profileImage: {
     type: String,
     required: false
+  },
+  address: {
+    type: String,
+    required: false
+  },
+  phone: {
+    type: Number,
+    required: false
+  },
+  CP: {
+    type: Number,
+    required: false
   }
 });
 

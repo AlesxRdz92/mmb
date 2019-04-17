@@ -5,5 +5,6 @@ export default {
     getItems: '/api/items/',
     getOne: '/api/items/one/',
     confirm: '/api/users/confirm/',
-    forgot: '/api/users/recover/'
+    forgot: '/api/users/recover/',
+    users: '/api/users/'
 };

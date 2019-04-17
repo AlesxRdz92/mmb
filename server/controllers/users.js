@@ -9,7 +9,9 @@ module.exports = {
         res.status(200).header('mmbauth', token).json({
         name: req.user.name,
         email: req.user.local.email,
-        profileImage: req.user.profileImage });
+        profileImage: req.user.profileImage,
+        address: req.user.address,
+        phone: req.user.phone });
     },
     signUp: async (req, res, next) => {
         let photo;
@@ -69,14 +71,21 @@ module.exports = {
         user.save();
         res.status(200).send();
     },
-    getUserInfo: () => {
+    getUserInfo: (req, res, next) => {
 
+    },
+    updateUserInfo: async (req, res, next) => {        
+        let updatedUser = await User.findByIdAndUpdate(req.user._id, {address: req.body.address, phone: req.body.phone}, {new: true});
+        console.log('********');
+        console.log(updatedUser);
     },
     facebookOAuth: async(req, res, next) => {
         const token = await req.user.generateAuthToken();
         res.status(200).header('mmbauth', token).json({
             name: req.user.name,
             email: req.user.facebook.email,
-            profileImage: req.user.profileImage });
+            profileImage: req.user.profileImage,
+            address: req.user.address,
+            phone: req.user.phone });
     }
 };

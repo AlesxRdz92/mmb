@@ -57,7 +57,9 @@
             <div class="navbar-item has-dropdown is-hoverable">
               <a class="navbar-link"><p>{{user.name}}</p></a>
               <div class="navbar-dropdown">
-                <a class="navbar-item">Perfil</a>
+                <router-link to="/profile">
+                  <a class="navbar-item">Perfil</a>
+                </router-link>
                 <a @click="logout()" class="navbar-item">Salir</a>
               </div>
             </div>

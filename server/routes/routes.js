@@ -14,6 +14,8 @@ router.get('/item/:id', routeHandler);
 router.get('/confirm/:id', routeHandler);
 router.get('/forgot', routeHandler);
 router.get('/forgot/:token', routeHandler);
+//TODO
+router.get('/profile', routeHandler);
 /*router.get('/export', secure.auth, routeHandler);
 router.get('/login', routeHandler);
 router.get('/success/:id', routeHandler);

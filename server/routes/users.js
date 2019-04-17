@@ -9,7 +9,8 @@ router.post('/signup', validateBody(schemas.signUpSchema), usersController.signU
 router.get('/confirm/:id', usersController.confirm);
 router.post('/recover', usersController.forgotPassword);
 router.post('/recover/:token', usersController.changePassword);
-router.get('/:id', usersController.getUserInfo);
+router.get('/', passport.authenticate('jwt', { session: false }), usersController.getUserInfo);
+router.patch('/', passport.authenticate('jwt', { session: false }), usersController.updateUserInfo);
 router.post('/signin', validateBody(schemas.signInSchema), passport.authenticate('local', { session: false }), usersController.signIn);
 router.post('/oauth/facebook', passport.authenticate('facebookToken', { session: false }), usersController.facebookOAuth);
 
