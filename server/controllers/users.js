@@ -96,6 +96,9 @@ module.exports = {
             email: req.user.facebook.email,
             profileImage: req.user.profileImage,
             address: req.user.address,
-            phone: req.user.phone });
+            phone: req.user.phone,
+            cp: req.user.cp,
+            state: req.user.state,
+            city: req.user.city });
     }
 };
