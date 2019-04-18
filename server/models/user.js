@@ -87,8 +87,16 @@ const userSchema = new Schema({
     type: Number,
     required: false
   },
-  CP: {
+  cp: {
     type: Number,
+    required: false
+  },
+  state: {
+    type: String,
+    required: false
+  },
+  city: {
+    type: String,
     required: false
   }
 });

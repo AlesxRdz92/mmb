@@ -122,8 +122,7 @@ export default {
                 this.$router.push("/");
             })
             .catch(error => {
-              //this.succesful = true;
-              //this.error = error.response.data;
+              this.succesful = true;
             });
         },
         login: () => {

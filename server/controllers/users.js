@@ -11,7 +11,10 @@ module.exports = {
         email: req.user.local.email,
         profileImage: req.user.profileImage,
         address: req.user.address,
-        phone: req.user.phone });
+        phone: req.user.phone,
+        cp: req.user.cp,
+        state: req.user.state,
+        city: req.user.city});
     },
     signUp: async (req, res, next) => {
         let photo;
@@ -74,10 +77,17 @@ module.exports = {
     getUserInfo: (req, res, next) => {
 
     },
-    updateUserInfo: async (req, res, next) => {        
-        let updatedUser = await User.findByIdAndUpdate(req.user._id, {address: req.body.address, phone: req.body.phone}, {new: true});
-        console.log('********');
-        console.log(updatedUser);
+    updateUserInfo: async (req, res, next) => {       
+        let updatedUser = await User.findByIdAndUpdate(req.user._id, {address: req.body.address, phone: req.body.phone, cp: req.body.cp, state: req.body.state, city: req.body.city}, {new: true});
+        res.status(200).json({
+            name: updatedUser.name,
+            email: updatedUser[updatedUser.method].email,
+            profileImage: updatedUser.profileImage,
+            address: updatedUser.address,
+            phone: updatedUser.phone,
+            cp: updatedUser.cp,
+            state: updatedUser.state,
+            city: updatedUser.city});
     },
     facebookOAuth: async(req, res, next) => {
         const token = await req.user.generateAuthToken();

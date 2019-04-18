@@ -25,14 +25,40 @@
           </div>
         </div>
         <div class="field">
-          <label class="label">Domicilio</label>
+          <label class="label">Dirección (Calle, número y colonia)</label>
           <div class="control has-icons-left">
             <input v-model="user.address" class="input" type="text">
             <span class="icon is-small is-left">
               <i class="fas fa-map-marker-alt"></i>
             </span>
           </div>
-          <p class="help is-danger">a</p>
+        </div>
+        <div class="field">
+          <label class="label">Código Postal</label>
+          <div class="control has-icons-left">
+            <input v-model="user.cp" class="input" type="number">
+            <span class="icon is-small is-left">
+              <i class="fas fa-map-marker-alt"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Estado</label>
+          <div class="control has-icons-left">
+            <input v-model="user.state" class="input" type="text">
+            <span class="icon is-small is-left">
+              <i class="fas fa-map-marker-alt"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Ciudad</label>
+          <div class="control has-icons-left">
+            <input v-model="user.city" class="input" type="text">
+            <span class="icon is-small is-left">
+              <i class="fas fa-map-marker-alt"></i>
+            </span>
+          </div>
         </div>
         <div class="field">
           <label class="label">Telefono</label>
@@ -42,7 +68,6 @@
               <i class="fas fa-phone"></i>
             </span>
           </div>
-          <p class="help is-danger">a</p>
         </div>
         <div class="field">
         <a id="own" @click="updateProfile()" class="button is-fullwidth">
@@ -77,14 +102,17 @@ export default {
     updateProfile() {
       axios.patch(API.users, {
         address: this.user.address,
-        phone: this.user.phone
+        phone: this.user.phone,
+        cp: this.user.cp,
+        state: this.user.state,
+        city: this.user.city
       },
       {
         headers: {
           mmbauth: this.$store.getters["auth/getJwt"].jwt
         }
       }).then(response => {
-
+        this.$store.commit("auth/setData", response.data);
       });
     }
   }
