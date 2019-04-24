@@ -4,7 +4,10 @@
     <div class="container">
       <div class="notification">
         <figure class="image is-128x128">
-          <img class="is-rounded" src="https://graph.facebook.com/v2.6/10157752500470839/picture?type=large">
+          <img
+            class="is-rounded"
+            src="https://graph.facebook.com/v2.6/10157752500470839/picture?type=large"
+          >
         </figure>
         <div class="field">
           <label class="label">Nombre</label>
@@ -70,13 +73,20 @@
           </div>
         </div>
         <div class="field">
-        <a id="own" @click="updateProfile()" class="button is-fullwidth">
-          <span>
-            <strong>Guardar</strong>
-          </span>
-        </a>
+          <a id="own" @click="updateProfile()" class="button is-fullwidth">
+            <span>
+              <strong>Guardar</strong>
+            </span>
+          </a>
+        </div>
       </div>
+    </div>
+    <div class="modal" :class="{'is-active': modal}">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <h1>{{info}}</h1>
       </div>
+      <button class="modal-close is-large" @click="modal = false" aria-label="close"></button>
     </div>
     <foot></foot>
   </div>
@@ -84,7 +94,7 @@
 <script>
 import NavBar from "./../../components/NavBar";
 import Foot from "./../../components/Footer";
-import axios from 'axios';
+import axios from "axios";
 import API from "./../../API";
 
 export default {
@@ -95,25 +105,38 @@ export default {
   },
   data() {
     return {
-      user: this.$store.getters["auth/userInfo"]
-    }
+      user: this.$store.getters["auth/userInfo"],
+      modal: false,
+      info: ''
+    };
   },
   methods: {
     updateProfile() {
-      axios.patch(API.users, {
-        address: this.user.address,
-        phone: this.user.phone,
-        cp: this.user.cp,
-        state: this.user.state,
-        city: this.user.city
-      },
-      {
-        headers: {
-          mmbauth: this.$store.getters["auth/getJwt"].jwt
-        }
-      }).then(response => {
-        this.$store.commit("auth/setData", response.data);
-      });
+      axios
+        .patch(
+          API.users,
+          {
+            address: this.user.address,
+            phone: this.user.phone,
+            cp: this.user.cp,
+            state: this.user.state,
+            city: this.user.city
+          },
+          {
+            headers: {
+              mmbauth: this.$store.getters["auth/getJwt"].jwt
+            }
+          }
+        )
+        .then(response => {
+          this.modal = true;
+          this.info = 'La informacion fue actualizada correctamente';
+          this.$store.commit("auth/setData", response.data);
+        })
+        .catch(error => {
+          this.modal = true;
+          this.info = 'Hubo un error al tratar de actualizar la informacion, por favor intentelo mas tarde';
+        });
     }
   }
 };
@@ -124,7 +147,7 @@ $footer-background-color: $panels-color;
 $button-border-color: $black;
 @import "~bulma/sass/elements/_all";
 @import "~bulma/sass/layout/_all";
-
+@import "~bulma/sass/components/modal";
 .container {
   width: 450px;
 }

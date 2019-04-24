@@ -76,7 +76,7 @@ const mutations = {
             state: data.state,
             city: data.city
         }));
-        state.user.jwt = data.token;
+        state.user.jwt = tempToken;
         state.user.loggedIn = true;
         state.user.name = data.name;
         state.user.email = data.email;

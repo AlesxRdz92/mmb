@@ -55,7 +55,7 @@ passport.use('facebookToken', new FacebookTokenStrategy({
 passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromHeader('mmbauth'),
     secretOrKey: process.env.JWTSECRET
-}, async (payload, done,) => {
+}, async (payload, done) => {
     try {
         //Find the user specified in token 
         const user = await User.findById(payload.sub);
