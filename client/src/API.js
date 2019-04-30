@@ -7,5 +7,5 @@ export default {
     confirm: '/api/users/confirm/',
     forgot: '/api/users/recover/',
     users: '/api/users/',
-    dates: 'api/dates/'
+    dates: '/api/dates/'
 };

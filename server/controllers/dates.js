@@ -6,7 +6,8 @@ module.exports = {
         let newDate = new Date({ 
             user: req.user._id,
             item: req.body.item,
-            time: req.body.time
+            time: req.body.time,
+            date: req.body.date
         });
         newDate.save().then(date => {
             res.status(200).send();
