@@ -25,9 +25,7 @@
         <a class="navbar-item">Ropa</a>
         <a class="navbar-item">Relojes</a>
         <a class="navbar-item">Smartphones</a>
-        <router-link to="/items/car" class="navbar-item">
-          Autos
-        </router-link>
+        <router-link to="/items/car" class="navbar-item">Autos</router-link>
         <a class="navbar-item">Bienes Raices</a>
         <a class="navbar-item">Blog</a>
       </div>
@@ -52,10 +50,12 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <figure class="image is-32x32">
-                <img class="is-rounded" :src="user.profileImage">
-              </figure>
+              <img class="is-rounded" :src="user.profileImage">
+            </figure>
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link"><p>{{user.name}}</p></a>
+              <a class="navbar-link">
+                <p>{{user.name}}</p>
+              </a>
               <div class="navbar-dropdown">
                 <router-link to="/profile">
                   <a class="navbar-item">Perfil</a>

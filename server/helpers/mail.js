@@ -27,6 +27,18 @@ const sendEmail = (to, subject) => {
         title: 'Recupera tu cuenta',
         down: 'Una vez que generes tu contraseña podras ingresar nuevamente a la plataforma.'
       }
+    },
+    notifyMeeting: {
+      subject: 'Cita agendada',
+      template: '/emailConfirmationTemplate.html',
+      mustacheTemplate: {
+        name: '',
+        link: ``,
+        body: `${to.name.name} con direccion ${to.name.address} ${to.name.city} y telefono ${to.name.phone} agendo una cita para ${to.token.date} ${to.token.time} para el producto ${to.token.item.name} ${to.token.item.category}`,
+        but: '',
+        title: `${to.name.name} agendo una cita`,
+        down: 'Marca al telefono'
+      }
     }
   };
 

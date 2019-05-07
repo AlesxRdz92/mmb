@@ -126,17 +126,14 @@ userSchema.pre("save", async function(next) {
   }
 });
 
-userSchema.methods.generateReset = function(done) {
+userSchema.methods.generateReset = async function(done) {
   const user = this;
-  crypto.randomBytes(20, function(error, buf){
-    if(error)
-      return done(error);
-    const token = buf.toString('hex');
-    const expires = Date.now() + 3600000; //1 hour
-    user.set('local.resetPassword.code', token);
-    user.set('local.resetPassword.expires', expires);
-    user.save(done);
-  });
+  let shasum = crypto.createHash('sha1');
+  
+  shasum.update(user.local.email + Date.now());
+  user.set('local.resetPassword.code', shasum.digest('hex'));
+  user.set('local.resetPassword.expires', Date.now() + 3600000);
+  await user.save(done);
 }
 
 userSchema.methods.generateAuthToken = function () {
