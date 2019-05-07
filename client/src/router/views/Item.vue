@@ -36,7 +36,7 @@
     </div>
     <div class="modal" :class="{'is-active': modal}">
       <div class="modal-background"></div>
-      <div class="modal-content">
+      <div v-if="loggedIn" class="modal-content">
         <div class="field">
           <label class="label">Telefono</label>
           <div class="control has-icons-left">
@@ -75,6 +75,9 @@
           </a>
         </div>
       </div>
+      <div v-else class="modal-content">
+        <label class="label">Lo sentimos! Tienes que iniciar sesion para poder agendar una cita con nosotros.</label>
+      </div>
       <button class="modal-close is-large" @click="modal = false" aria-label="close"></button>
     </div>
     <foot></foot>
@@ -95,6 +98,7 @@ export default {
   data() {
     return {
       user: this.$store.getters["auth/userInfo"],
+      loggedIn: this.$store.getters["auth/isLogged"],
       modal: false,
       date: {
         date: "",

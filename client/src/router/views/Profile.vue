@@ -4,10 +4,7 @@
     <div class="container">
       <div class="notification">
         <figure class="image is-128x128">
-          <img
-            class="is-rounded"
-            src="https://graph.facebook.com/v2.6/10157752500470839/picture?type=large"
-          >
+          <img class="is-rounded" :src="user.profileImage">
         </figure>
         <div class="field">
           <label class="label">Nombre</label>
@@ -107,7 +104,7 @@ export default {
     return {
       user: this.$store.getters["auth/userInfo"],
       modal: false,
-      info: ''
+      info: ""
     };
   },
   methods: {
@@ -130,14 +127,18 @@ export default {
         )
         .then(response => {
           this.modal = true;
-          this.info = 'La informacion fue actualizada correctamente';
+          this.info = "La informacion fue actualizada correctamente";
           this.$store.commit("auth/setData", response.data);
         })
         .catch(error => {
           this.modal = true;
-          this.info = 'Hubo un error al tratar de actualizar la informacion, por favor intentelo mas tarde';
+          this.info =
+            "Hubo un error al tratar de actualizar la informacion, por favor intentelo mas tarde";
         });
     }
+  },
+  beforeCreate() {
+    if (!this.$store.getters["auth/isLogged"]) this.$router.push("/signin");
   }
 };
 </script>
