@@ -38,7 +38,7 @@
             <router-link to="/signin">
               <a class="navbar-item">Entrar</a>
             </router-link>
-            <router-link to="/">
+            <router-link to="/car">
               <a class="navbar-item">
                 <i id="carrito" class="fas fa-shopping-cart"></i>
               </a>
@@ -63,7 +63,7 @@
                 <a @click="logout()" class="navbar-item">Salir</a>
               </div>
             </div>
-            <router-link to="/">
+            <router-link to="/car">
               <a class="navbar-item">
                 <i id="carrito" class="fas fa-shopping-cart"></i>
               </a>

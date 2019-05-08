@@ -13,6 +13,7 @@
               alt="Placeholder image"
             >
           </figure>
+          <p>* Da click en la imagen para ver mas fotografias</p>
         </div>
       </div>
       <div class="tile is-vertical is-parent">

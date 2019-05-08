@@ -7,6 +7,7 @@ import confirm from './views/Confirm';
 import forgot from './views/ForgotPassword';
 import reset from './views/ResetPassword';
 import profile from './views/Profile';
+import car from './views/ShoppingCar';
 
 export default [
     {
@@ -79,6 +80,14 @@ export default [
         component: profile,
         meta: {
             auth: true
+        }
+    },
+    {
+        path: '/car',
+        name: 'Car',
+        component: car,
+        meta: {
+            auth: false
         }
     }
 ]
