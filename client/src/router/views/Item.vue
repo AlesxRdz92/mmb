@@ -30,54 +30,62 @@
           </ul>
           <br>
           <br>
-          <a v-if="item.justDate" @click="action()" class="button is-fullwidth">Agendar cita</a>
-          <a v-else class="button is-fullwidth">Agregar a carrito</a>
+          <a
+            @click="action()"
+            class="button is-fullwidth"
+          >{{item.justDate ? 'Agendar cita' : 'Agregar a carrito'}}</a>
         </div>
       </div>
     </div>
     <div class="modal" :class="{'is-active': modal}">
       <div class="modal-background"></div>
       <div v-if="loggedIn" class="modal-content">
-        <div class="field">
-          <label class="label">Telefono</label>
-          <div class="control has-icons-left">
-            <input v-model="user.phone" class="input" type="tel">
-            <span class="icon is-small is-left">
-              <i class="fas fa-phone"></i>
-            </span>
-          </div>
-        </div>
-        <label class="label">Fecha y hora</label>
-        <div class="field is-horizontal">
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded has-icons-left">
-                <input v-model="date.date" class="input" type="date" placeholder="Name">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-calendar-week"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control is-expanded has-icons-left has-icons-right">
-                <input v-model="date.time" class="input" type="time">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-clock"></i>
-                </span>
-              </p>
+        <div class="container">
+          <div class="field">
+            <label class="label">Telefono</label>
+            <div class="control has-icons-left">
+              <input v-model="user.phone" class="input" type="tel">
+              <span class="icon is-small is-left">
+                <i class="fas fa-phone"></i>
+              </span>
             </div>
           </div>
-        </div>
-        <div class="field">
-          <a @click="agendar()" class="button is-fullwidth">
-            <span>
-              <strong>Agendar</strong>
-            </span>
-          </a>
+          <label class="label">Fecha y hora</label>
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded has-icons-left">
+                  <input v-model="date.date" class="input" type="date" placeholder="Name">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-calendar-week"></i>
+                  </span>
+                </p>
+              </div>
+              <div class="field">
+                <p class="control is-expanded has-icons-left has-icons-right">
+                  <input v-model="date.time" class="input" type="time">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-clock"></i>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <a @click="agendar()" class="button is-fullwidth">
+              <span>
+                <strong>Agendar</strong>
+              </span>
+            </a>
+          </div>
         </div>
       </div>
       <div v-else class="modal-content">
-        <label class="label">Lo sentimos! Tienes que iniciar sesion para poder agendar una cita con nosotros.</label>
+        <div class="container">
+          <label
+            class="label"
+          >Lo sentimos! Tienes que iniciar sesion para poder agendar una cita con nosotros.</label>
+        </div>
       </div>
       <button class="modal-close is-large" @click="modal = false" aria-label="close"></button>
     </div>
@@ -137,15 +145,19 @@ export default {
       if (this.item.justDate === true) {
         this.modal = true;
       } else {
+        this.$store.commit("shoppingCar/addItem", {
+          id: this.item._id,
+          name: this.item.name,
+          price: this.item.price,
+          photo: this.item.photos[0],
+          currency: this.item.currency
+        });
       }
     },
     agendar() {
-      if(this.user.phone === '')
-        return
-      if(this.date.date === '')
-        return
-      if(this.date.time === '')
-        return
+      if (this.user.phone === "") return;
+      if (this.date.date === "") return;
+      if (this.date.time === "") return;
       axios
         .patch(
           API.users,
@@ -180,8 +192,8 @@ export default {
             )
             .then(res => {
               this.modal = false;
-              this.date.date = '';
-              this.date.time = '';
+              this.date.date = "";
+              this.date.time = "";
             });
         });
     }

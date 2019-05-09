@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <bar></bar>
-        <foot></foot>
-    </div>
+  <div>
+    <bar></bar>
+    <foot></foot>
+  </div>
 </template>
 <script>
 import NavBar from "./../../components/NavBar";

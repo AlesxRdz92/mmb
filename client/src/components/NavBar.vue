@@ -40,7 +40,7 @@
             </router-link>
             <router-link to="/car">
               <a class="navbar-item">
-                <i id="carrito" class="fas fa-shopping-cart"></i>
+                <i id="carrito" class="fas fa-shopping-cart"> {{numberItems === 0 ? '' : numberItems}} </i>
               </a>
             </router-link>
           </div>
@@ -65,7 +65,8 @@
             </div>
             <router-link to="/car">
               <a class="navbar-item">
-                <i id="carrito" class="fas fa-shopping-cart"></i>
+                <i id="carrito" class="fas fa-shopping-cart"> {{numberItems === 0 ? '' : numberItems}}
+                </i>
               </a>
             </router-link>
           </div>
@@ -87,6 +88,9 @@ export default {
     },
     user() {
       return this.$store.getters["auth/userInfo"];
+    },
+    numberItems() {
+      return this.$store.getters["shoppingCar/numberItems"].leng;
     }
   },
   methods: {
